@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Domogik Plugin for Virtual Device
+Domogik Plugin for Virtual Device (Allows to create sensors updated from outside with a URL)
 
 The plugin and the documentation are still in development
 
