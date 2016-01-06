@@ -11,13 +11,14 @@ Purpose
 =======
 
 
-This plugin only provides for a device a **command** to update a **sensor** of this device.
+This plugin only provides for a device a **command** to update the **sensor** of this device.
 
-A virtual device give a REST URL for external software to update a virtual sensor:
+A virtual device give a REST URL for external software to update the virtual sensor of this device:
+
 
 For example,
 
-    * if a plugin in Jeedom that don't exist in Domogik, this feature allows Jeedom to set the sensors in Domogik
+    * if a plugin in Jeedom that don't exist in Domogik, this feature allows Jeedom to update the sensor in Domogik
     * A small device like wifi ESP8266 sensor can call a Domogik **VDevice** URL to update the **VDevice** sensor
     
     
