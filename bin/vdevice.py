@@ -87,7 +87,7 @@ class VDeviceManager(Plugin):
 		try:
 			device_name = self.vdevice_namelist[device_id]
 		except KeyError:
-			self.log.error("### Device ID '%s' unknown, have you restarted the plugin after device creation ?" %  (device_id)
+			self.log.error("### Device ID '%s' unknown, have you restarted the plugin after device creation ?" %  device_id)
 			return
 
 		for sensor in self.sensors[device_id]:
