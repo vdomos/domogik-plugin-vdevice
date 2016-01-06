@@ -37,14 +37,20 @@ Here are some screenshots to view usage
 
 .. image:: Domogik_Plugin_Vdevice_1.png
 
+
+Like Script plugin, there are only 3 datatype of sensors for now:
+
 .. image:: Domogik_Plugin_Vdevice_2.png
 
 .. image:: Domogik_Plugin_Vdevice_3.png
 
+
+Exemple of a device "Livebox débit", with the **command** used to update the **sensor**:
+
 .. image:: Domogik_Plugin_Vdevice_4.png
 
 
-Exemple with Jeedom to push sensor'value in Domogik:
+Exemple with Jeedom to push sensor's value in Domogik:
 
 .. image:: Domogik_Plugin_Vdevice_5.png
 
