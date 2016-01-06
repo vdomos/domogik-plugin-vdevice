@@ -21,7 +21,20 @@ For example,
     * if a plugin in Jeedom that don't exist in Domogik, this feature allows Jeedom to update the sensor in Domogik
     * A small device like wifi ESP8266 sensor can call a Domogik **VDevice** URL to update the **VDevice** sensor
     
-    
+
+Simple test example in shell, for a device with a **command** (id=36) and a **sensor** (id=217):
+
+For update the sensor: ::
+
+	$ curl -s 'http://hermes:40406/rest/cmd/id/36?value=260'
+
+The read of the sensor return the same value: ::
+
+	$ curl -s 'http://hermes:40406/rest/sensorhistory/id/217/last/1'; echo
+	[{"timestamp": 1452101182.0, "value_str": "260", "value_num": 260.0}]
+
+
+
 This will allow an easier transition from home automation box to Domogik
     
     
