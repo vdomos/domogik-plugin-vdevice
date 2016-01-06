@@ -11,7 +11,7 @@ Purpose
 =======
 
 
-This plugin only provides for a device a **command** to update the **sensor** of this device.
+This plugin provides a **command** to update the **sensor** of the created device.
 
 A virtual device give a REST URL for external software to update the virtual sensor of this device:
 
@@ -35,23 +35,23 @@ Here are some screenshots to view usage
 ---------------------------------------
 
 
-.. image:: Domogik_Plugin_VDevice_1.png
+.. image:: Domogik_Plugin_Vdevice_1.png
 
-.. image:: Domogik_Plugin_VDevice_2.png
+.. image:: Domogik_Plugin_Vdevice_2.png
 
-.. image:: Domogik_Plugin_VDevice_3.png
+.. image:: Domogik_Plugin_Vdevice_3.png
 
-.. image:: Domogik_Plugin_VDevice_4.png
+.. image:: Domogik_Plugin_Vdevice_4.png
 
 
 Exemple with Jeedom to push sensor'value in Domogik:
 
-.. image:: Domogik_Plugin_VDevice_5.png
+.. image:: Domogik_Plugin_Vdevice_5.png
 
 
 In Domoweb:
 
-.. image:: Domogik_Plugin_VDevice_6.png
+.. image:: Domogik_Plugin_Vdevice_6.png
 
 
 Dependencies
