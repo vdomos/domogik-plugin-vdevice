@@ -13,6 +13,16 @@ Purpose
 
 This plugin provides a **command** to update the **sensor** of the created device.
 
+Three devices type as the Script plugin are possible:
+
+    * vdevice.info_binary
+    * vdevice.info_number
+    * vdevice.info_string
+
+Each device have a **command** and a **sensor**.
+
+The called **command** will update the **sensor**, allowing the sensor to be update from a REST URL.
+
 A virtual device give a REST URL for external software to update the virtual sensor of this device:
 
 
