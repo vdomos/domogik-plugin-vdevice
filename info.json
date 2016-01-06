@@ -1,0 +1,132 @@
+{
+	"json_version": 2,
+	
+	"identity": {
+		"author": "domos", 
+		"author_email": "domos.vesta at gmail.com", 
+		"tags": ["computer"], 
+		"dependencies": [],
+		"description": "Domogik Plugin for Virtual Device", 
+		"domogik_min_version": "0.4.0", 
+		"name": "vdevice", 
+		"type": "plugin", 
+		"version": "0.1"
+	},
+
+	"products" : [ ],
+	
+	"configuration": [], 
+	
+	"device_types": {
+		"vdevice.info_number": {
+			"id": "vdevice.info_number",
+			"description": "Virtual device for a Number Sensor", 
+			"name": "Virtual info_number device",
+			"commands": ["set_info_number"],
+			"sensors": ["get_info_number"],
+			"parameters": []
+		},
+		"vdevice.info_binary": {
+			"id": "vdevice.info_binary",
+			"description": "Virtual device for a Binary Sensor", 
+			"name": "Virtual info_binary device",
+			"commands": ["set_info_binary"],
+			"sensors": ["get_info_binary"],
+			"parameters": []
+		},
+		"vdevice.info_string": {
+			"id": "vdevice.info_string",
+			"description": "Virtual device for a String Sensor", 
+			"name": "Virtual info_string device",
+			"commands": ["set_info_string"],
+			"sensors": ["get_info_string"],
+			"parameters": []
+		}
+	},
+
+	"commands": { 
+		"set_info_number" : {
+			"name" : "Cmd set_info_number",
+			"return_confirmation" : true,
+			"parameters" : [
+				{
+					"key" : "value",
+					"data_type" : "DT_Number",
+					"conversion" : "" 
+				}
+			]
+		},
+		"set_info_binary" : {
+			"name" : "Cmd set_info_binary",
+			"return_confirmation" : true,
+			"parameters" : [
+				{
+					"key" : "value",
+					"data_type" : "DT_Bool",
+					"conversion" : "" 
+				}
+			]
+		},
+		"set_info_string" : {
+			"name" : "Cmd set_info_string",
+			"return_confirmation" : true,
+			"parameters" : [
+				{
+					"key" : "value",
+					"data_type" : "DT_String",
+					"conversion" : "" 
+				}
+			]
+		}
+	},
+
+	"sensors": {
+		"get_info_number": {
+			"name": "Sensor get_info_number",
+			"incremental" : false,
+			"data_type": "DT_Number",
+			"conversion" : "",
+			"timeout" : 0,
+			"history": {
+				"store": true,
+				"duplicate" : true,
+				"max": 0,
+				"expire": 0,
+				"round_value": 0
+			}
+		},
+
+		"get_info_binary": {
+			"name": "Sensor get_info_binary",
+			"incremental" : false,
+			"data_type": "DT_Bool",
+			"conversion" : "",
+			"timeout" : 0,
+			"history": {
+				"store": true,
+				"duplicate" : true,
+				"max": 0,
+				"expire": 0,
+				"round_value": 0
+			}
+		},
+
+		"get_info_string": {
+			"name": "Sensor get_info_string",
+			"incremental" : false,
+			"data_type": "DT_String",
+			"conversion" : "",
+			"timeout" : 0,
+			"history": {
+				"store": true,
+				"duplicate" : true,
+				"max": 0,
+				"expire": 0,
+				"round_value": 0
+			}
+		}
+	},
+	
+	"xpl_stats": {},
+	"xpl_commands": {}
+}
