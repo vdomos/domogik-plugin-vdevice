@@ -7,6 +7,10 @@ Plugin vdevice
 Domogik Plugin for Virtual Device
 
 
+.. image:: Domogik_Plugin_Vdevice_1.png
+	
+
+
 Purpose
 =======
 
@@ -47,23 +51,41 @@ The read of the sensor return the same value: ::
 
 This will allow an easier transition from home automation box to Domogik
     
-    
 
 .. warning::	
 	The plugin and the documentation are still in development
 
-	
-	
-Here are some screenshots to view usage
----------------------------------------
+
+Dependencies
+============
+
+No dependencies needed
 
 
-.. image:: Domogik_Plugin_Vdevice_1.png
+Plugin configuration
+====================
 
+No configuration needed for the plugin
+   
 
 Like Script plugin, there are only 3 datatype of sensors for now:
 
+    * vdevice.info_binary
+    * vdevice.info_number
+    * vdevice.info_string
+
+    
 .. image:: Domogik_Plugin_Vdevice_2.png
+
+
+Create the devices
+==================
+
+Device parameters configuration
+-------------------------------
+
+There is no parameter for device configuration, only a name.
+
 
 .. image:: Domogik_Plugin_Vdevice_3.png
 
@@ -78,33 +100,6 @@ Exemple with Jeedom to push sensor's value in Domogik:
 .. image:: Domogik_Plugin_Vdevice_5.png
 
 
-In Domoweb:
-
-.. image:: Domogik_Plugin_Vdevice_6.png
-
-
-Dependencies
-============
-
-Plugin configuration
-====================
-
-Create the devices
-==================
-
-Device parameters configuration
--------------------------------
-
-X parameters are needed for a domogik device creation ...
-
-
-===================== =========================== ======================================================================
-Key                   Type                        Description
-===================== =========================== ======================================================================
-key1                  datatype                    ...
---------------------- --------------------------- ----------------------------------------------------------------------
-key2                  datatype                    ...
-===================== =========================== ======================================================================
 
 
 Start the plugin
@@ -112,7 +107,14 @@ Start the plugin
 
 You can now start the plugin (start button) and use the created devices.
 
+
 Set up your widgets on the user interface
 =========================================
 
 You can now place the widgets of your devices features on the user interface.
+
+
+In Domoweb:
+
+.. image:: Domogik_Plugin_Vdevice_6.png
+
