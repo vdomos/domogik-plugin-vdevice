@@ -84,14 +84,14 @@ class VDeviceManager(Plugin):
         try:
             device_name = self.vdevice_namelist[device_id]
         except KeyError:
-            self.log.error("### Device ID '%s' unknown, have you restarted the plugin after device creation ?" % (device_id)
+            self.log.error("### Device ID '%s' unknown, have you restarted the plugin after device creation ?" % (device_id))
             return (False, "Unknown device ID")
 
         for sensor in self.sensors[device_id]:
             self.log.info("==> Update Sensor '%s' / id '%s' with value '%s' for device '%s'" % (sensor, self.sensors[device_id][sensor], value, device_name))
             # INFO ==> Update Sensor 'get_info_number' / id '217' with value '132' for device 'VDevice Number 1'
             data[self.sensors[device_id][sensor]] = value
-        self.log.info("==> 0MQ PUB sended = %s" % format(data))			#  {u'id_sensor': u'value'} => {217: u'132'}
+        self.log.info("==> 0MQ PUB sended = %s" % format(data))			# {u'id_sensor': u'value'} => {217: u'132'}
 
         try:
             self._pub.send_event('client.sensor', data)
@@ -127,3 +127,4 @@ class VDeviceManager(Plugin):
 
 if __name__ == "__main__":
     VDeviceManager()
+
