@@ -81,14 +81,12 @@ class VDeviceManager(Plugin):
         """ Send the value sensors values over MQ
         """
         data = {}
-        try:
-            device_name = self.vdevice_namelist[device_id]
-        except KeyError:
+        if device_id not in self.vdevice_namelist:
             self.log.error("### Device ID '%s' unknown, have you restarted the plugin after device creation ?" % (device_id))
-            return (False, "Unknown device ID")
-
+            return (False, "Vdevice, Unknown device ID")
+            
         for sensor in self.sensors[device_id]:
-            self.log.info("==> Update Sensor '%s' / id '%s' with value '%s' for device '%s'" % (sensor, self.sensors[device_id][sensor], value, device_name))
+            self.log.info("==> Update Sensor '%s' / id '%s' with value '%s' for device '%s'" % (sensor, self.sensors[device_id][sensor], value, self.vdevice_namelist[device_id]))
             # INFO ==> Update Sensor 'get_info_number' / id '217' with value '132' for device 'VDevice Number 1'
             data[self.sensors[device_id][sensor]] = value
         self.log.info("==> 0MQ PUB sended = %s" % format(data))			# {u'id_sensor': u'value'} => {217: u'132'}
@@ -98,7 +96,7 @@ class VDeviceManager(Plugin):
         except:
             # We ignore the message if some values are not correct ...
             self.log.debug(u"Bad MQ message to send. This may happen due to some invalid sensor data. MQ data is : {0}".format(data))
-            return (False, "Bad MQ message to update sensor")
+            return (False, "Vdevice, Bad MQ message to update sensor")
 
         return (True, None)
 

@@ -7,7 +7,7 @@
 		"tags": ["computer"], 
 		"dependencies": [],
 		"description": "Domogik Plugin for Virtual Device", 
-		"domogik_min_version": "0.4.0", 
+		"domogik_min_version": "0.5.0", 
 		"name": "vdevice", 
 		"type": "plugin", 
 		"version": "0.1"
