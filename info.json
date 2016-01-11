@@ -1,132 +1,262 @@
 {
-	"json_version": 2,
-	
-	"identity": {
-		"author": "domos", 
-		"author_email": "domos.vesta at gmail.com", 
-		"tags": ["computer"], 
-		"dependencies": [],
-		"description": "Domogik Plugin for Virtual Device", 
-		"domogik_min_version": "0.5.0", 
-		"name": "vdevice", 
-		"type": "plugin", 
-		"version": "0.1"
-	},
+    "json_version": 2,
+    
+    "identity": {
+        "author": "domos", 
+        "author_email": "domos.vesta at gmail.com", 
+        "tags": ["computer"], 
+        "dependencies": [],
+        "description": "Domogik Plugin for Virtual Device", 
+        "domogik_min_version": "0.5.0", 
+        "name": "vdevice", 
+        "type": "plugin", 
+        "version": "0.1"
+    },
 
-	"products" : [ ],
-	
-	"configuration": [], 
-	
-	"device_types": {
-		"vdevice.info_number": {
-			"id": "vdevice.info_number",
-			"description": "Virtual device for a Number Sensor", 
-			"name": "Virtual info_number device",
-			"commands": ["set_info_number"],
-			"sensors": ["get_info_number"],
-			"parameters": []
-		},
-		"vdevice.info_binary": {
-			"id": "vdevice.info_binary",
-			"description": "Virtual device for a Binary Sensor", 
-			"name": "Virtual info_binary device",
-			"commands": ["set_info_binary"],
-			"sensors": ["get_info_binary"],
-			"parameters": []
-		},
-		"vdevice.info_string": {
-			"id": "vdevice.info_string",
-			"description": "Virtual device for a String Sensor", 
-			"name": "Virtual info_string device",
-			"commands": ["set_info_string"],
-			"sensors": ["get_info_string"],
-			"parameters": []
-		}
-	},
+    "products" : [ ],
+    
+    "configuration": [], 
+    
+    "device_types": {
+        "vdevice.number": {
+            "id": "vdevice.number",
+            "description": "Virtual device for a Number Sensor", 
+            "name": "Virtual Number",
+            "commands": ["set_number"],
+            "sensors": ["get_number"],
+            "parameters": []
+        },
+        "vdevice.binary": {
+            "id": "vdevice.binary",
+            "description": "Virtual device for a Binary Sensor", 
+            "name": "Virtual Binary",
+            "commands": ["set_binary"],
+            "sensors": ["get_binary"],
+            "parameters": []
+        },
+        "vdevice.string": {
+            "id": "vdevice.string",
+            "description": "Virtual device for a String Sensor", 
+            "name": "Virtual String",
+            "commands": ["set_string"],
+            "sensors": ["get_string"],
+            "parameters": []
+        },
+        "vdevice.temperature": {
+            "id": "vdevice.temperature",
+            "description": "Virtual device for a Temperature Sensor", 
+            "name": "Virtual Temperature",
+            "commands": ["set_temperature"],
+            "sensors": ["get_temperature"],
+            "parameters": []
+        },
+        "vdevice.humidity": {
+            "id": "vdevice.humidity",
+            "description": "Virtual device for a Humidity Sensor", 
+            "name": "Virtual Humidity",
+            "commands": ["set_humidity"],
+            "sensors": ["get_humidity"],
+            "parameters": []
+        },
+        "vdevice.switch": {
+            "id": "vdevice.switch",
+            "description": "Virtual device for a Switch Sensor", 
+            "name": "Virtual Switch",
+            "commands": ["set_switch"],
+            "sensors": ["get_switch"],
+            "parameters": []
+        },
+        "vdevice.openclose": {
+            "id": "vdevice.switch",
+            "description": "Virtual device for a OpenClose Sensor", 
+            "name": "Virtual OpenClose",
+            "commands": ["set_openclose"],
+            "sensors": ["get_openclose"],
+            "parameters": []
+        }
+    },
 
-	"commands": { 
-		"set_info_number" : {
-			"name" : "Cmd set_info_number",
-			"return_confirmation" : true,
-			"parameters" : [
-				{
-					"key" : "value",
-					"data_type" : "DT_Number",
-					"conversion" : "" 
-				}
-			]
-		},
-		"set_info_binary" : {
-			"name" : "Cmd set_info_binary",
-			"return_confirmation" : true,
-			"parameters" : [
-				{
-					"key" : "value",
-					"data_type" : "DT_Bool",
-					"conversion" : "" 
-				}
-			]
-		},
-		"set_info_string" : {
-			"name" : "Cmd set_info_string",
-			"return_confirmation" : true,
-			"parameters" : [
-				{
-					"key" : "value",
-					"data_type" : "DT_String",
-					"conversion" : "" 
-				}
-			]
-		}
-	},
+    "commands": { 
+        "set_number" : {
+            "name" : "Set number",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type" : "DT_Number",
+                    "conversion" : "" 
+                }
+            ]
+        },
+        "set_binary" : {
+            "name" : "Set binary",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type" : "DT_Bool",
+                    "conversion" : "" 
+                }
+            ]
+        },
+        "set_string" : {
+            "name" : "Set string",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type" : "DT_String",
+                    "conversion" : "" 
+                }
+            ]
+        },
+        "set_temperature" : {
+            "name" : "Set temperature",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type" : "DT_Temp",
+                    "conversion" : "" 
+                }
+            ]
+        },
+        "set_humidity" : {
+            "name" : "Set humidity",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type" : "DT_Humidity",
+                    "conversion" : "" 
+                }
+            ]
+        },
+        "set_switch" : {
+            "name" : "Set switch",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type" : "DT_Switch",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_openclose" : {
+            "name" : "Set openclose",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_OpenClose",
+                    "conversion" : ""
+                }
+            ]
+        }
+    },
 
-	"sensors": {
-		"get_info_number": {
-			"name": "Sensor get_info_number",
-			"incremental" : false,
-			"data_type": "DT_Number",
-			"conversion" : "",
-			"timeout" : 0,
-			"history": {
-				"store": true,
-				"duplicate" : true,
-				"max": 0,
-				"expire": 0,
-				"round_value": 0
-			}
-		},
-
-		"get_info_binary": {
-			"name": "Sensor get_info_binary",
-			"incremental" : false,
-			"data_type": "DT_Bool",
-			"conversion" : "",
-			"timeout" : 0,
-			"history": {
-				"store": true,
-				"duplicate" : true,
-				"max": 0,
-				"expire": 0,
-				"round_value": 0
-			}
-		},
-
-		"get_info_string": {
-			"name": "Sensor get_info_string",
-			"incremental" : false,
-			"data_type": "DT_String",
-			"conversion" : "",
-			"timeout" : 0,
-			"history": {
-				"store": true,
-				"duplicate" : true,
-				"max": 0,
-				"expire": 0,
-				"round_value": 0
-			}
-		}
-	},
-	
-	"xpl_stats": {},
-	"xpl_commands": {}
+    "sensors": {
+        "get_number": {
+            "name": "Get number",
+            "incremental" : false,
+            "data_type": "DT_Number",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : true,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "get_binary": {
+            "name": "Get binary",
+            "incremental" : false,
+            "data_type": "DT_Bool",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : true,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "get_string": {
+            "name": "Get string",
+            "incremental" : false,
+            "data_type": "DT_String",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : true,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "get_temperature": {
+            "name": "Get temperature",
+            "incremental" : false,
+            "data_type": "DT_Temp",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "get_humidity": {
+            "name": "Get humidity",
+            "incremental" : false,
+            "data_type": "DT_Humidity",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "get_switch": {
+            "name": "Get switch",
+            "incremental" : false,
+            "data_type": "DT_Switch",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "get_openclose": {
+            "name": "Get openclose",
+            "incremental" : false,
+            "data_type": "DT_OpenClose",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        }
+    },
+    
+    "xpl_stats": {},
+    "xpl_commands": {}
 }
