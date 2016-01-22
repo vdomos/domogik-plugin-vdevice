@@ -83,7 +83,7 @@ class VDeviceManager(Plugin):
         data = {}
         if device_id not in self.vdevice_namelist:
             self.log.error("### Device ID '%s' unknown, have you restarted the plugin after device creation ?" % (device_id))
-            return (False, "Vdevice, Unknown device ID")
+            return (False, "Plugin vdevice, Unknown device ID" % device_id)
             
         for sensor in self.sensors[device_id]:
             self.log.info("==> Update Sensor '%s' / id '%s' with value '%s' for device '%s'" % (sensor, self.sensors[device_id][sensor], value, self.vdevice_namelist[device_id]))
