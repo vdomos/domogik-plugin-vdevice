@@ -22,70 +22,70 @@
             "id": "vdevice.number",
             "description": "Virtual device for a Number Sensor", 
             "name": "Virtual Number",
-            "commands": ["set_number"],
-            "sensors": ["get_number"],
+            "commands": ["set_virtual_number"],
+            "sensors": ["virtual_number"],
             "parameters": []
         },
         "vdevice.binary": {
             "id": "vdevice.binary",
             "description": "Virtual device for a Binary Sensor", 
             "name": "Virtual Binary",
-            "commands": ["set_binary"],
-            "sensors": ["get_binary"],
+            "commands": ["set_virtual_binary"],
+            "sensors": ["virtual_binary"],
             "parameters": []
         },
         "vdevice.string": {
             "id": "vdevice.string",
             "description": "Virtual device for a String Sensor", 
             "name": "Virtual String",
-            "commands": ["set_string"],
-            "sensors": ["get_string"],
+            "commands": ["set_virtual_string"],
+            "sensors": ["virtual_string"],
             "parameters": []
         },
         "vdevice.temperature": {
             "id": "vdevice.temperature",
             "description": "Virtual device for a Temperature Sensor", 
             "name": "Virtual Temperature",
-            "commands": ["set_temperature"],
-            "sensors": ["get_temperature"],
+            "commands": ["set_virtual_temperature"],
+            "sensors": ["virtual_temperature"],
             "parameters": []
         },
         "vdevice.humidity": {
             "id": "vdevice.humidity",
             "description": "Virtual device for a Humidity Sensor", 
             "name": "Virtual Humidity",
-            "commands": ["set_humidity"],
-            "sensors": ["get_humidity"],
+            "commands": ["set_virtual_humidity"],
+            "sensors": ["virtual_humidity"],
             "parameters": []
         },
         "vdevice.percent": {
             "id": "vdevice.percent",
             "description": "Virtual device for a percent Sensor", 
             "name": "Virtual Percent",
-            "commands": ["set_percent"],
-            "sensors": ["get_percent"],
+            "commands": ["set_virtual_percent"],
+            "sensors": ["virtual_percent"],
             "parameters": []
         },
         "vdevice.switch": {
             "id": "vdevice.switch",
             "description": "Virtual device for a Switch Sensor", 
             "name": "Virtual Switch",
-            "commands": ["set_switch"],
-            "sensors": ["get_switch"],
+            "commands": ["set_virtual_switch"],
+            "sensors": ["virtual_switch"],
             "parameters": []
         },
         "vdevice.openclose": {
             "id": "vdevice.switch",
             "description": "Virtual device for a OpenClose Sensor", 
             "name": "Virtual OpenClose",
-            "commands": ["set_openclose"],
-            "sensors": ["get_openclose"],
+            "commands": ["set_virtual_openclose"],
+            "sensors": ["virtual_openclose"],
             "parameters": []
         }
     },
 
     "commands": { 
-        "set_number" : {
+        "set_virtual_number" : {
             "name" : "Set Virtual Number",
             "return_confirmation" : true,
             "parameters" : [
@@ -96,7 +96,7 @@
                 }
             ]
         },
-        "set_binary" : {
+        "set_virtual_binary" : {
             "name" : "Set Virtual Binary",
             "return_confirmation" : true,
             "parameters" : [
@@ -107,7 +107,7 @@
                 }
             ]
         },
-        "set_string" : {
+        "set_virtual_string" : {
             "name" : "Set Virtual String",
             "return_confirmation" : true,
             "parameters" : [
@@ -118,7 +118,7 @@
                 }
             ]
         },
-        "set_temperature" : {
+        "set_virtual_temperature" : {
             "name" : "Set Virtual Temperature",
             "return_confirmation" : true,
             "parameters" : [
@@ -129,7 +129,7 @@
                 }
             ]
         },
-        "set_humidity" : {
+        "set_virtual_humidity" : {
             "name" : "Set Virtual Humidity",
             "return_confirmation" : true,
             "parameters" : [
@@ -140,7 +140,7 @@
                 }
             ]
         },
-        "set_percent" : {
+        "set_virtual_percent" : {
             "name" : "Set Virtual Percent",
             "return_confirmation" : true,
             "parameters" : [
@@ -151,7 +151,7 @@
                 }
             ]
         },
-        "set_switch" : {
+        "set_virtual_switch" : {
             "name" : "Set Virtual Switch",
             "return_confirmation" : true,
             "parameters" : [
@@ -162,7 +162,7 @@
                 }
             ]
         },
-        "set_openclose" : {
+        "set_virtual_openclose" : {
             "name" : "Set Virtual Openclose",
             "return_confirmation" : true,
             "parameters" : [
@@ -176,7 +176,7 @@
     },
 
     "sensors": {
-        "get_number": {
+        "virtual_number": {
             "name": "Virtual Number",
             "incremental" : false,
             "data_type": "DT_Number",
@@ -190,7 +190,7 @@
                 "round_value": 0
             }
         },
-        "get_binary": {
+        "virtual_binary": {
             "name": "Virtual Binary",
             "incremental" : false,
             "data_type": "DT_Bool",
@@ -204,7 +204,7 @@
                 "round_value": 0
             }
         },
-        "get_string": {
+        "virtual_string": {
             "name": "Virtual String",
             "incremental" : false,
             "data_type": "DT_String",
@@ -218,7 +218,7 @@
                 "round_value": 0
             }
         },
-        "get_temperature": {
+        "virtual_temperature": {
             "name": "Virtual Temperature",
             "incremental" : false,
             "data_type": "DT_Temp",
@@ -232,7 +232,7 @@
                 "round_value": 0
             }
         },
-        "get_humidity": {
+        "virtual_humidity": {
             "name": "Virtual Humidity",
             "incremental" : false,
             "data_type": "DT_Humidity",
@@ -246,7 +246,7 @@
                 "round_value": 0
             }
         },
-        "get_percent": {
+        "virtual_percent": {
             "name": "Virtual Percent",
             "incremental" : false,
             "data_type": "DT_Scaling",
@@ -260,7 +260,7 @@
                 "round_value": 0
             }
         },
-        "get_switch": {
+        "virtual_switch": {
             "name": "Virtual Switch",
             "incremental" : false,
             "data_type": "DT_Switch",
@@ -274,7 +274,7 @@
                 "round_value": 0
             }
         },
-        "get_openclose": {
+        "virtual_openclose": {
             "name": "Virtual Openclose",
             "incremental" : false,
             "data_type": "DT_OpenClose",
