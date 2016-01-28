@@ -10,7 +10,7 @@
         "domogik_min_version": "0.5.0", 
         "name": "vdevice", 
         "type": "plugin", 
-        "version": "0.1"
+        "version": "0.2"
     },
 
     "products" : [ ],
@@ -80,6 +80,14 @@
             "name": "Virtual OpenClose",
             "commands": ["set_virtual_openclose"],
             "sensors": ["virtual_openclose"],
+            "parameters": []
+        },
+        "vdevice.startstop": {
+            "id": "vdevice.startstop",
+            "description": "Virtual device for a StartStop Sensor", 
+            "name": "Virtual StartStop",
+            "commands": ["set_virtual_startstop"],
+            "sensors": ["virtual_startstop"],
             "parameters": []
         }
     },
@@ -169,6 +177,17 @@
                 {
                     "key" : "value",
                     "data_type": "DT_OpenClose",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_startstop" : {
+            "name" : "Set Virtual StartStop",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_Start",
                     "conversion" : ""
                 }
             ]
@@ -278,6 +297,20 @@
             "name": "Virtual Openclose",
             "incremental" : false,
             "data_type": "DT_OpenClose",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_startstop": {
+            "name": "Virtual StartStop",
+            "incremental" : false,
+            "data_type": "DT_Start",
             "conversion" : "",
             "timeout" : 0,
             "history": {
