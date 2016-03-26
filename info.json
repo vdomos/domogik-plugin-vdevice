@@ -89,6 +89,14 @@
             "commands": ["set_virtual_startstop"],
             "sensors": ["virtual_startstop"],
             "parameters": []
+        },
+        "vdevice.motion": {
+            "id": "vdevice.motion",
+            "description": "Virtual device for a Motion Sensor", 
+            "name": "Virtual Motion",
+            "commands": ["set_virtual_motion"],
+            "sensors": ["virtual_motion"],
+            "parameters": []
         }
     },
 
@@ -188,6 +196,17 @@
                 {
                     "key" : "value",
                     "data_type": "DT_Start",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_motion" : {
+            "name" : "Set Virtual Motion",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_Motion",
                     "conversion" : ""
                 }
             ]
@@ -311,6 +330,20 @@
             "name": "Virtual StartStop",
             "incremental" : false,
             "data_type": "DT_Start",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_motion": {
+            "name": "Virtual Motion",
+            "incremental" : false,
+            "data_type": "DT_Motion",
             "conversion" : "",
             "timeout" : 0,
             "history": {
