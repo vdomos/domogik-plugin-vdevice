@@ -10,7 +10,7 @@
         "domogik_min_version": "0.5.0", 
         "name": "vdevice", 
         "type": "plugin", 
-        "version": "0.1"
+        "version": "0.2"
     },
 
     "products" : [ ],
@@ -22,63 +22,87 @@
             "id": "vdevice.number",
             "description": "Virtual device for a Number Sensor", 
             "name": "Virtual Number",
-            "commands": ["set_number"],
-            "sensors": ["get_number"],
+            "commands": ["set_virtual_number"],
+            "sensors": ["virtual_number"],
             "parameters": []
         },
         "vdevice.binary": {
             "id": "vdevice.binary",
             "description": "Virtual device for a Binary Sensor", 
             "name": "Virtual Binary",
-            "commands": ["set_binary"],
-            "sensors": ["get_binary"],
+            "commands": ["set_virtual_binary"],
+            "sensors": ["virtual_binary"],
             "parameters": []
         },
         "vdevice.string": {
             "id": "vdevice.string",
             "description": "Virtual device for a String Sensor", 
             "name": "Virtual String",
-            "commands": ["set_string"],
-            "sensors": ["get_string"],
+            "commands": ["set_virtual_string"],
+            "sensors": ["virtual_string"],
             "parameters": []
         },
         "vdevice.temperature": {
             "id": "vdevice.temperature",
             "description": "Virtual device for a Temperature Sensor", 
             "name": "Virtual Temperature",
-            "commands": ["set_temperature"],
-            "sensors": ["get_temperature"],
+            "commands": ["set_virtual_temperature"],
+            "sensors": ["virtual_temperature"],
             "parameters": []
         },
         "vdevice.humidity": {
             "id": "vdevice.humidity",
             "description": "Virtual device for a Humidity Sensor", 
             "name": "Virtual Humidity",
-            "commands": ["set_humidity"],
-            "sensors": ["get_humidity"],
+            "commands": ["set_virtual_humidity"],
+            "sensors": ["virtual_humidity"],
+            "parameters": []
+        },
+        "vdevice.percent": {
+            "id": "vdevice.percent",
+            "description": "Virtual device for a percent Sensor", 
+            "name": "Virtual Percent",
+            "commands": ["set_virtual_percent"],
+            "sensors": ["virtual_percent"],
             "parameters": []
         },
         "vdevice.switch": {
             "id": "vdevice.switch",
             "description": "Virtual device for a Switch Sensor", 
             "name": "Virtual Switch",
-            "commands": ["set_switch"],
-            "sensors": ["get_switch"],
+            "commands": ["set_virtual_switch"],
+            "sensors": ["virtual_switch"],
             "parameters": []
         },
         "vdevice.openclose": {
             "id": "vdevice.switch",
             "description": "Virtual device for a OpenClose Sensor", 
             "name": "Virtual OpenClose",
-            "commands": ["set_openclose"],
-            "sensors": ["get_openclose"],
+            "commands": ["set_virtual_openclose"],
+            "sensors": ["virtual_openclose"],
+            "parameters": []
+        },
+        "vdevice.startstop": {
+            "id": "vdevice.startstop",
+            "description": "Virtual device for a StartStop Sensor", 
+            "name": "Virtual StartStop",
+            "commands": ["set_virtual_startstop"],
+            "sensors": ["virtual_startstop"],
+            "parameters": []
+        },
+        "vdevice.motion": {
+            "id": "vdevice.motion",
+            "description": "Virtual device for a Motion Sensor", 
+            "name": "Virtual Motion",
+            "commands": ["set_virtual_motion"],
+            "sensors": ["virtual_motion"],
             "parameters": []
         }
     },
 
     "commands": { 
-        "set_number" : {
-            "name" : "Set number",
+        "set_virtual_number" : {
+            "name" : "Set Virtual Number",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -88,8 +112,8 @@
                 }
             ]
         },
-        "set_binary" : {
-            "name" : "Set binary",
+        "set_virtual_binary" : {
+            "name" : "Set Virtual Binary",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -99,8 +123,8 @@
                 }
             ]
         },
-        "set_string" : {
-            "name" : "Set string",
+        "set_virtual_string" : {
+            "name" : "Set Virtual String",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -110,8 +134,8 @@
                 }
             ]
         },
-        "set_temperature" : {
-            "name" : "Set temperature",
+        "set_virtual_temperature" : {
+            "name" : "Set Virtual Temperature",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -121,8 +145,8 @@
                 }
             ]
         },
-        "set_humidity" : {
-            "name" : "Set humidity",
+        "set_virtual_humidity" : {
+            "name" : "Set Virtual Humidity",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -132,8 +156,19 @@
                 }
             ]
         },
-        "set_switch" : {
-            "name" : "Set switch",
+        "set_virtual_percent" : {
+            "name" : "Set Virtual Percent",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type" : "DT_Scaling",
+                    "conversion" : "" 
+                }
+            ]
+        },
+        "set_virtual_switch" : {
+            "name" : "Set Virtual Switch",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -143,8 +178,8 @@
                 }
             ]
         },
-        "set_openclose" : {
-            "name" : "Set openclose",
+        "set_virtual_openclose" : {
+            "name" : "Set Virtual Openclose",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -153,12 +188,34 @@
                     "conversion" : ""
                 }
             ]
+        },
+        "set_virtual_startstop" : {
+            "name" : "Set Virtual StartStop",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_Start",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_motion" : {
+            "name" : "Set Virtual Motion",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_Motion",
+                    "conversion" : ""
+                }
+            ]
         }
     },
 
     "sensors": {
-        "get_number": {
-            "name": "Get number",
+        "virtual_number": {
+            "name": "Virtual Number",
             "incremental" : false,
             "data_type": "DT_Number",
             "conversion" : "",
@@ -171,8 +228,8 @@
                 "round_value": 0
             }
         },
-        "get_binary": {
-            "name": "Get binary",
+        "virtual_binary": {
+            "name": "Virtual Binary",
             "incremental" : false,
             "data_type": "DT_Bool",
             "conversion" : "",
@@ -185,8 +242,8 @@
                 "round_value": 0
             }
         },
-        "get_string": {
-            "name": "Get string",
+        "virtual_string": {
+            "name": "Virtual String",
             "incremental" : false,
             "data_type": "DT_String",
             "conversion" : "",
@@ -199,8 +256,8 @@
                 "round_value": 0
             }
         },
-        "get_temperature": {
-            "name": "Get temperature",
+        "virtual_temperature": {
+            "name": "Virtual Temperature",
             "incremental" : false,
             "data_type": "DT_Temp",
             "conversion" : "",
@@ -213,8 +270,8 @@
                 "round_value": 0
             }
         },
-        "get_humidity": {
-            "name": "Get humidity",
+        "virtual_humidity": {
+            "name": "Virtual Humidity",
             "incremental" : false,
             "data_type": "DT_Humidity",
             "conversion" : "",
@@ -227,8 +284,22 @@
                 "round_value": 0
             }
         },
-        "get_switch": {
-            "name": "Get switch",
+        "virtual_percent": {
+            "name": "Virtual Percent",
+            "incremental" : false,
+            "data_type": "DT_Scaling",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_switch": {
+            "name": "Virtual Switch",
             "incremental" : false,
             "data_type": "DT_Switch",
             "conversion" : "",
@@ -241,10 +312,38 @@
                 "round_value": 0
             }
         },
-        "get_openclose": {
-            "name": "Get openclose",
+        "virtual_openclose": {
+            "name": "Virtual Openclose",
             "incremental" : false,
             "data_type": "DT_OpenClose",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_startstop": {
+            "name": "Virtual StartStop",
+            "incremental" : false,
+            "data_type": "DT_Start",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_motion": {
+            "name": "Virtual Motion",
+            "incremental" : false,
+            "data_type": "DT_Motion",
             "conversion" : "",
             "timeout" : 0,
             "history": {
