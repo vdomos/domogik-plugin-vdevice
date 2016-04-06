@@ -37,6 +37,9 @@ Implements
 
 from domogik.common.plugin import Plugin
 from domogikmq.message import MQMessage
+from domogikmq.reqrep.client import MQSyncReq
+
+import json
 
 
 class VDeviceManager(Plugin):
@@ -59,23 +62,60 @@ class VDeviceManager(Plugin):
         # get the sensors id per device:
         self.sensors = self.get_sensors(self.devices)
         # self.log.info(u"==> sensors:   %s" % format(self.sensors))	
-        # INFO ==> sensors:   {66: {u'set_info_number': 159}}  ('device id': 'sensor name': 'sensor id')
+        # INFO ==> sensors:   {66: {u'virtual_number': 159}}  =>  ('device id': {'sensor name': 'sensor id'})
 
         # for each device ...
         self.vdevice_namelist = {}
         for a_device in self.devices:
-            # global device parameters
-            device_name = a_device["name"]					# Ex.: "Conso Elec Jour"
-            device_id = a_device["id"]						# Ex.: "128"
-            device_typeid = a_device["device_type_id"]		# Ex.: "vdevice.info_number | vdevice.info_binary | vdevice.info_string"
+            device_name = a_device["name"]					                # Ex.: "Max Temp Ext." ...
+            device_id = a_device["id"]						                # Ex.: "128"
+            device_typeid = a_device["device_type_id"]		                # Ex.: "vdevice.number" | "vdevice.binary" | "vdevice.string" | ...
+            sensor_name = device_typeid.replace("vdevice.","virtual_")      # Ex.: "virtual_number" | "virtual_binary" | "virtual_string" | ...
+            sensor_id = self.sensors[device_id][sensor_name]
             self.log.info(u"==> Device '%s' (id:%s / %s), Sensor: '%s'" % (device_name, device_id, device_typeid, self.sensors[device_id]))
-            # INFO ==> Device 'VDevice Binary 1' (id:112 / vdevice.info_binary), Sensor: '{u'get_info_binary': 216}'
-            # INFO ==> Device 'VDevice Number 1' (id:113 / vdevice.info_number), Sensor: '{u'get_info_number': 217}'
-            # INFO ==> Device 'VDevice String 1' (id:114 / vdevice.info_string), Sensor: '{u'get_info_string': 218}'
+            # INFO ==> Device 'VDevice Number 1' (id:113 / vdevice.number), Sensor: '{u'virtual_number': 217}'
             self.vdevice_namelist[device_id] = device_name
 
+            # Update device's sensor with device's parammeter if it's not set
+            if not self.sensorMQValueIsSet(sensor_id):
+                value = self.get_parameter(a_device, "value")
+                if device_typeid in ["vdevice.binary", "vdevice.onoff", "vdevice.openclose", "vdevice.startstop", "vdevice.motion"]:
+                    if value == "y": value = 1
+                    else: value = 0
+                elif device_typeid == "vdevice.number":
+                    if not self.is_number(value):
+                        value = 0
+                self.log.info(u"==> Device '%s' (id:%s / %s), Update Sensor (id:%s) with initial device parameter value '%s'" % (device_name, device_id, device_typeid, sensor_id, value))
+                self.send_data(device_id, value)
+            
         self.ready()
 
+
+
+    def sensorMQValueIsSet(self, id):
+        """  REQ/REP message to get sensor value
+        """
+        msg = MQMessage()
+        msg.set_action('sensor_history.get')
+        msg.add_data('sensor_id', id)
+        msg.add_data('mode', 'last')
+        mq_client = MQSyncReq(self.zmq)
+        try:
+            sensor_history = mq_client.request('dbmgr', msg.get(), timeout=10).get()
+            # ['sensor_history.result', '{"status": true, "reason": "", "sensor_id": 242, "values": [{"timestamp": 1456221006, "value_str": "2797", "value_num": 2797.0}], "mode": "last"}']
+            # ['sensor_history.result', '{"status": true, "reason": "", "sensor_id": 300, "values": null, "mode": "last"}']
+            sensor_last = json.loads(sensor_history[1])
+            if sensor_last['status'] == True and sensor_last['values']:
+                sensor_value = sensor_last['values'][0]['value_str']
+                self.log.info(u"==> 0MQ REQ/REP: Last sensor value: %s" % sensor_value)
+                return True
+            else:
+                self.log.info(u"==> 0MQ REQ/REP: Last sensor status: null")
+                return False
+        except AttributeError:
+            self.log.error(u"### 0MQ REQ/REP: '%s'", format(traceback.format_exc()))
+            return False
+        
 
     def send_data(self, device_id, value):
         """ Send the value sensors values over MQ
@@ -89,10 +129,10 @@ class VDeviceManager(Plugin):
             self.log.info("==> Update Sensor '%s' / id '%s' with value '%s' for device '%s'" % (sensor, self.sensors[device_id][sensor], value, self.vdevice_namelist[device_id]))
             # INFO ==> Update Sensor 'get_info_number' / id '217' with value '132' for device 'VDevice Number 1'
             data[self.sensors[device_id][sensor]] = value
-        self.log.info("==> 0MQ PUB sended = %s" % format(data))			# {u'id_sensor': u'value'} => {217: u'132'}
 
         try:
             self._pub.send_event('client.sensor', data)
+            self.log.info("==> 0MQ PUB sended = %s" % format(data))			# {u'id_sensor': u'value'} => {217: u'132'}
         except:
             # We ignore the message if some values are not correct ...
             self.log.debug(u"Bad MQ message to send. This may happen due to some invalid sensor data. MQ data is : {0}".format(data))
@@ -121,6 +161,16 @@ class VDeviceManager(Plugin):
             reply_msg.add_data('status', status)
             reply_msg.add_data('reason', reason)
             self.reply(reply_msg.get())
+
+
+    def is_number(self, s):
+        ''' Return 'True' if s is a number
+        '''
+        try:
+            float(s)
+            return True
+        except ValueError:
+            return False
 
 
 if __name__ == "__main__":
