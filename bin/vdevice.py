@@ -79,7 +79,7 @@ class VDeviceManager(Plugin):
             # Update device's sensor with device's parammeter if it's not set
             if not self.sensorMQValueIsSet(sensor_id):
                 value = self.get_parameter(a_device, "value")
-                if device_typeid in ["vdevice.binary", "vdevice.onoff", "vdevice.openclose", "vdevice.startstop", "vdevice.motion"]:
+                if device_typeid in ["vdevice.binary", "vdevice.switch", "vdevice.openclose", "vdevice.startstop", "vdevice.motion"]:
                     if value == "y": value = 1
                     else: value = 0
                 elif device_typeid == "vdevice.number":
