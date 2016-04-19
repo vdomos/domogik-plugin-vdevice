@@ -44,7 +44,7 @@
                 {
                     "key": "value",
                     "xpl": false,
-                    "description": "Initial value for the device's sensor (checked = 1)",
+                    "description": "Initial value for the device's sensor ('Yes' = '1')",
                     "type": "boolean",
                     "default": false
                 }
@@ -60,7 +60,7 @@
                 {
                     "key": "value",
                     "xpl": false,
-                    "description": "Initial value for the device's sensor (checked = On)",
+                    "description": "Initial value for the device's sensor ('Yes' = 'On')",
                     "type": "boolean",
                     "default": false
                 }
@@ -76,7 +76,7 @@
                 {
                     "key": "value",
                     "xpl": false,
-                    "description": "Initial value for the device's sensor (checked = Close)",
+                    "description": "Initial value for the device's sensor ('Yes' = 'Close')",
                     "type": "boolean",
                     "default": false
                 }
@@ -92,7 +92,7 @@
                 {
                     "key": "value",
                     "xpl": false,
-                    "description": "Initial value for the device's sensor (checked = Start)",
+                    "description": "Initial value for the device's sensor ('Yes' = 'Start')",
                     "type": "boolean",
                     "default": false
                 }
@@ -108,7 +108,7 @@
                 {
                     "key": "value",
                     "xpl": false,
-                    "description": "Initial value for the device's sensor (checked = Motion)",
+                    "description": "Initial value for the device's sensor ('Yes' = 'Motion')",
                     "type": "boolean",
                     "default": false
                 }
