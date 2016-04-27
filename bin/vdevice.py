@@ -88,6 +88,10 @@ class VDeviceManager(Plugin):
                 self.log.info(u"==> Device '%s' (id:%s / %s), Update Sensor (id:%s) with initial device parameter value '%s'" % (device_name, device_id, device_typeid, sensor_id, value))
                 self.send_data(device_id, value)
             
+        # Subscribte to MQ message "device-new et device.update"
+        self.log.info(u"==> Add listener for new or changed devices.")
+        self.add_mq_sub("device.update")
+        
         self.ready()
 
 
@@ -161,6 +165,17 @@ class VDeviceManager(Plugin):
             reply_msg.add_data('status', status)
             reply_msg.add_data('reason', reason)
             self.reply(reply_msg.get())
+
+
+    def on_message(self, msgid, content):
+        self.log.info(u"==> New pub message '{0}'".format(msgid))   # 'device.update'
+        self.log.info(u"Message content : {0}".format(content))
+        # {u'client_id': u'plugin-vdevice.hades', u'device_id': 59}
+        # {u'client_id': u'plugin-script.hades', u'device_id': 64}
+        if  content['client_id'] != 'plugin-vdevice.hades':         # hostname à supprimer
+            self.log.debug("PUB message 'device.update' not for vdevice plugin.")
+            return
+        
 
 
     def is_number(self, s):
