@@ -40,7 +40,7 @@ from domogikmq.message import MQMessage
 from domogikmq.reqrep.client import MQSyncReq
 
 import json
-
+import traceback
 
 class VDeviceManager(Plugin):
     """
@@ -80,8 +80,7 @@ class VDeviceManager(Plugin):
             if not self.sensorMQValueIsSet(sensor_id):
                 value = self.get_parameter(a_device, "value")
                 if device_typeid in ["vdevice.binary", "vdevice.switch", "vdevice.openclose", "vdevice.startstop", "vdevice.motion"]:
-                    if value == "y": value = 1
-                    else: value = 0
+                    value = 1 if value == "y" else 0
                 elif device_typeid == "vdevice.number":
                     if not self.is_number(value):
                         value = 0
@@ -104,6 +103,7 @@ class VDeviceManager(Plugin):
         msg.add_data('sensor_id', id)
         msg.add_data('mode', 'last')
         mq_client = MQSyncReq(self.zmq)
+        self.log.info(u"==> 0MQ REQ/REP: REQ Last sensor value for id : '%s'" % id)
         try:
             sensor_history = mq_client.request('dbmgr', msg.get(), timeout=10).get()
             # ['sensor_history.result', '{"status": true, "reason": "", "sensor_id": 242, "values": [{"timestamp": 1456221006, "value_str": "2797", "value_num": 2797.0}], "mode": "last"}']
@@ -111,10 +111,10 @@ class VDeviceManager(Plugin):
             sensor_last = json.loads(sensor_history[1])
             if sensor_last['status'] == True and sensor_last['values']:
                 sensor_value = sensor_last['values'][0]['value_str']
-                self.log.info(u"==> 0MQ REQ/REP: Last sensor value: %s" % sensor_value)
+                self.log.info(u"==> 0MQ REQ/REP: REP Last sensor value for id '%s': %s" % (id, sensor_value))
                 return True
             else:
-                self.log.info(u"==> 0MQ REQ/REP: Last sensor status: null")
+                self.log.info(u"==> 0MQ REQ/REP: REP Last sensor status for id '%s': null" % id)
                 return False
         except AttributeError:
             self.log.error(u"### 0MQ REQ/REP: '%s'", format(traceback.format_exc()))
@@ -168,11 +168,11 @@ class VDeviceManager(Plugin):
 
 
     def on_message(self, msgid, content):
-        self.log.info(u"==> New pub message '{0}'".format(msgid))   # 'device.update'
+        self.log.info(u"==> New MQ PUB message '{0}'".format(msgid))   # 'device.update'
         self.log.info(u"Message content : {0}".format(content))
         # {u'client_id': u'plugin-vdevice.hades', u'device_id': 59}
         # {u'client_id': u'plugin-script.hades', u'device_id': 64}
-        if  content['client_id'] != 'plugin-vdevice.hades':         # hostname à supprimer
+        if "plugin-vdevice" not in content['client_id']:
             self.log.debug("PUB message 'device.update' not for vdevice plugin.")
             return
         

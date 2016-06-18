@@ -145,6 +145,38 @@
                     "default": "null"
                 }
             ]
+        },
+        "vdevice.colorrgb": {
+            "id": "vdevice.colorrgb",
+            "description": "Virtual device for Color RGB", 
+            "name": "Virtual ColorRGB",
+            "commands": ["set_virtual_colorrgb"],
+            "sensors": ["virtual_colorrgb"],
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value (list) for the device's sensor",
+                    "type": "string",
+                    "default": "0,0,0"
+                }
+            ]
+        },
+        "vdevice.colorrgbhexa": {
+            "id": "vdevice.colorrgbhexa",
+            "description": "Virtual device for Color RGB (hexa)", 
+            "name": "Virtual ColorRGBHexa",
+            "commands": ["set_virtual_colorrgbhexa"],
+            "sensors": ["virtual_colorrgbhexa"],
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value (string) for the device's sensor",
+                    "type": "string",
+                    "default": "000000"
+                }
+            ]
         }
     },
 
@@ -233,6 +265,28 @@
                 {
                     "key" : "value",
                     "data_type": "DT_Video",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_colorrgb" : {
+            "name" : "Virtual ColorRGB",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_ColorRGB",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_colorrgbhexa" : {
+            "name" : "Virtual ColorRGBHexa",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_ColorRGBHexa",
                     "conversion" : ""
                 }
             ]
@@ -342,6 +396,34 @@
             "name": "Virtual Video",
             "incremental" : false,
             "data_type": "DT_Video",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_colorrgb": {
+            "name": "Virtual ColorRGB",
+            "incremental" : false,
+            "data_type": "DT_ColorRGB",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_colorrgbhexa": {
+            "name": "Virtual ColorRGBHexa",
+            "incremental" : false,
+            "data_type": "DT_ColorRGBHexa",
             "conversion" : "",
             "timeout" : 0,
             "history": {
