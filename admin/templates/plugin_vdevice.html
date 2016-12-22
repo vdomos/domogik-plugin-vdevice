@@ -1,0 +1,10 @@
+{% extends theme("base/base.html") %}
+{% import theme("base/wtf.html") as wtf %}
+
+{% block content %}
+{% include theme("client_menu.html") %}
+<div class="container">
+<h2>{% trans %}Last errors in plugin log{% endtrans %}</H2>
+<pre>{{ errorlog }}</pre>
+</div>
+{% endblock %}

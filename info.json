@@ -10,7 +10,7 @@
         "domogik_min_version": "0.5.0", 
         "name": "vdevice", 
         "type": "plugin", 
-        "version": "0.2"
+        "version": "1.0"
     },
 
     "products" : [ ],
@@ -24,7 +24,15 @@
             "name": "Virtual Number",
             "commands": ["set_virtual_number"],
             "sensors": ["virtual_number"],
-            "parameters": []
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value (number) for the device's sensor",
+                    "type": "integer",
+                    "default": "0"
+                }
+            ]
         },
         "vdevice.binary": {
             "id": "vdevice.binary",
@@ -32,39 +40,15 @@
             "name": "Virtual Binary",
             "commands": ["set_virtual_binary"],
             "sensors": ["virtual_binary"],
-            "parameters": []
-        },
-        "vdevice.string": {
-            "id": "vdevice.string",
-            "description": "Virtual device for a String Sensor", 
-            "name": "Virtual String",
-            "commands": ["set_virtual_string"],
-            "sensors": ["virtual_string"],
-            "parameters": []
-        },
-        "vdevice.temperature": {
-            "id": "vdevice.temperature",
-            "description": "Virtual device for a Temperature Sensor", 
-            "name": "Virtual Temperature",
-            "commands": ["set_virtual_temperature"],
-            "sensors": ["virtual_temperature"],
-            "parameters": []
-        },
-        "vdevice.humidity": {
-            "id": "vdevice.humidity",
-            "description": "Virtual device for a Humidity Sensor", 
-            "name": "Virtual Humidity",
-            "commands": ["set_virtual_humidity"],
-            "sensors": ["virtual_humidity"],
-            "parameters": []
-        },
-        "vdevice.percent": {
-            "id": "vdevice.percent",
-            "description": "Virtual device for a percent Sensor", 
-            "name": "Virtual Percent",
-            "commands": ["set_virtual_percent"],
-            "sensors": ["virtual_percent"],
-            "parameters": []
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value for the device's sensor ('Yes' = '1')",
+                    "type": "boolean",
+                    "default": false
+                }
+            ]
         },
         "vdevice.switch": {
             "id": "vdevice.switch",
@@ -72,15 +56,31 @@
             "name": "Virtual Switch",
             "commands": ["set_virtual_switch"],
             "sensors": ["virtual_switch"],
-            "parameters": []
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value for the device's sensor ('Yes' = 'On')",
+                    "type": "boolean",
+                    "default": false
+                }
+            ]
         },
         "vdevice.openclose": {
-            "id": "vdevice.switch",
+            "id": "vdevice.openclose",
             "description": "Virtual device for a OpenClose Sensor", 
             "name": "Virtual OpenClose",
             "commands": ["set_virtual_openclose"],
             "sensors": ["virtual_openclose"],
-            "parameters": []
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value for the device's sensor ('Yes' = 'Close')",
+                    "type": "boolean",
+                    "default": false
+                }
+            ]
         },
         "vdevice.startstop": {
             "id": "vdevice.startstop",
@@ -88,7 +88,15 @@
             "name": "Virtual StartStop",
             "commands": ["set_virtual_startstop"],
             "sensors": ["virtual_startstop"],
-            "parameters": []
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value for the device's sensor ('Yes' = 'Start')",
+                    "type": "boolean",
+                    "default": false
+                }
+            ]
         },
         "vdevice.motion": {
             "id": "vdevice.motion",
@@ -96,13 +104,85 @@
             "name": "Virtual Motion",
             "commands": ["set_virtual_motion"],
             "sensors": ["virtual_motion"],
-            "parameters": []
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value for the device's sensor ('Yes' = 'Motion')",
+                    "type": "boolean",
+                    "default": false
+                }
+            ]
+        },
+        "vdevice.string": {
+            "id": "vdevice.string",
+            "description": "Virtual device for a String Sensor", 
+            "name": "Virtual String",
+            "commands": ["set_virtual_string"],
+            "sensors": ["virtual_string"],
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value (string) for the device's sensor",
+                    "type": "string",
+                    "default": "null"
+                }
+            ]
+        },
+        "vdevice.video": {
+            "id": "vdevice.video",
+            "description": "Virtual device for Video", 
+            "name": "Virtual Video",
+            "commands": ["set_virtual_video"],
+            "sensors": ["virtual_video"],
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value (string) for the device's sensor",
+                    "type": "string",
+                    "default": "null"
+                }
+            ]
+        },
+        "vdevice.colorrgb": {
+            "id": "vdevice.colorrgb",
+            "description": "Virtual device for Color RGB", 
+            "name": "Virtual ColorRGB",
+            "commands": ["set_virtual_colorrgb"],
+            "sensors": ["virtual_colorrgb"],
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value (list) for the device's sensor",
+                    "type": "string",
+                    "default": "0,0,0"
+                }
+            ]
+        },
+        "vdevice.colorrgbhexa": {
+            "id": "vdevice.colorrgbhexa",
+            "description": "Virtual device for Color RGB (hexa)", 
+            "name": "Virtual ColorRGBHexa",
+            "commands": ["set_virtual_colorrgbhexa"],
+            "sensors": ["virtual_colorrgbhexa"],
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value (string) for the device's sensor",
+                    "type": "string",
+                    "default": "000000"
+                }
+            ]
         }
     },
 
     "commands": { 
         "set_virtual_number" : {
-            "name" : "Set Virtual Number",
+            "name" : "Virtual Number",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -113,7 +193,7 @@
             ]
         },
         "set_virtual_binary" : {
-            "name" : "Set Virtual Binary",
+            "name" : "Virtual Binary",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -123,52 +203,8 @@
                 }
             ]
         },
-        "set_virtual_string" : {
-            "name" : "Set Virtual String",
-            "return_confirmation" : true,
-            "parameters" : [
-                {
-                    "key" : "value",
-                    "data_type" : "DT_String",
-                    "conversion" : "" 
-                }
-            ]
-        },
-        "set_virtual_temperature" : {
-            "name" : "Set Virtual Temperature",
-            "return_confirmation" : true,
-            "parameters" : [
-                {
-                    "key" : "value",
-                    "data_type" : "DT_Temp",
-                    "conversion" : "" 
-                }
-            ]
-        },
-        "set_virtual_humidity" : {
-            "name" : "Set Virtual Humidity",
-            "return_confirmation" : true,
-            "parameters" : [
-                {
-                    "key" : "value",
-                    "data_type" : "DT_Humidity",
-                    "conversion" : "" 
-                }
-            ]
-        },
-        "set_virtual_percent" : {
-            "name" : "Set Virtual Percent",
-            "return_confirmation" : true,
-            "parameters" : [
-                {
-                    "key" : "value",
-                    "data_type" : "DT_Scaling",
-                    "conversion" : "" 
-                }
-            ]
-        },
         "set_virtual_switch" : {
-            "name" : "Set Virtual Switch",
+            "name" : "Virtual Switch",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -179,7 +215,7 @@
             ]
         },
         "set_virtual_openclose" : {
-            "name" : "Set Virtual Openclose",
+            "name" : "Virtual OpenClose",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -190,7 +226,7 @@
             ]
         },
         "set_virtual_startstop" : {
-            "name" : "Set Virtual StartStop",
+            "name" : "Virtual StartStop",
             "return_confirmation" : true,
             "parameters" : [
                 {
@@ -201,12 +237,56 @@
             ]
         },
         "set_virtual_motion" : {
-            "name" : "Set Virtual Motion",
+            "name" : "Virtual Motion",
             "return_confirmation" : true,
             "parameters" : [
                 {
                     "key" : "value",
                     "data_type": "DT_Motion",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_string" : {
+            "name" : "Virtual String",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type" : "DT_String",
+                    "conversion" : "" 
+                }
+            ]
+        },
+        "set_virtual_video" : {
+            "name" : "Virtual Video",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_Video",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_colorrgb" : {
+            "name" : "Virtual ColorRGB",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_ColorRGB",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_colorrgbhexa" : {
+            "name" : "Virtual ColorRGBHexa",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_ColorRGBHexa",
                     "conversion" : ""
                 }
             ]
@@ -242,62 +322,6 @@
                 "round_value": 0
             }
         },
-        "virtual_string": {
-            "name": "Virtual String",
-            "incremental" : false,
-            "data_type": "DT_String",
-            "conversion" : "",
-            "timeout" : 0,
-            "history": {
-                "store": true,
-                "duplicate" : true,
-                "max": 0,
-                "expire": 0,
-                "round_value": 0
-            }
-        },
-        "virtual_temperature": {
-            "name": "Virtual Temperature",
-            "incremental" : false,
-            "data_type": "DT_Temp",
-            "conversion" : "",
-            "timeout" : 0,
-            "history": {
-                "store": true,
-                "duplicate" : false,
-                "max": 0,
-                "expire": 0,
-                "round_value": 0
-            }
-        },
-        "virtual_humidity": {
-            "name": "Virtual Humidity",
-            "incremental" : false,
-            "data_type": "DT_Humidity",
-            "conversion" : "",
-            "timeout" : 0,
-            "history": {
-                "store": true,
-                "duplicate" : false,
-                "max": 0,
-                "expire": 0,
-                "round_value": 0
-            }
-        },
-        "virtual_percent": {
-            "name": "Virtual Percent",
-            "incremental" : false,
-            "data_type": "DT_Scaling",
-            "conversion" : "",
-            "timeout" : 0,
-            "history": {
-                "store": true,
-                "duplicate" : false,
-                "max": 0,
-                "expire": 0,
-                "round_value": 0
-            }
-        },
         "virtual_switch": {
             "name": "Virtual Switch",
             "incremental" : false,
@@ -313,7 +337,7 @@
             }
         },
         "virtual_openclose": {
-            "name": "Virtual Openclose",
+            "name": "Virtual OpenClose",
             "incremental" : false,
             "data_type": "DT_OpenClose",
             "conversion" : "",
@@ -344,6 +368,62 @@
             "name": "Virtual Motion",
             "incremental" : false,
             "data_type": "DT_Motion",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_string": {
+            "name": "Virtual String",
+            "incremental" : false,
+            "data_type": "DT_String",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : true,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_video": {
+            "name": "Virtual Video",
+            "incremental" : false,
+            "data_type": "DT_Video",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_colorrgb": {
+            "name": "Virtual ColorRGB",
+            "incremental" : false,
+            "data_type": "DT_ColorRGB",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_colorrgbhexa": {
+            "name": "Virtual ColorRGBHexa",
+            "incremental" : false,
+            "data_type": "DT_ColorRGBHexa",
             "conversion" : "",
             "timeout" : 0,
             "history": {
