@@ -10,7 +10,7 @@
         "domogik_min_version": "0.5.0", 
         "name": "vdevice", 
         "type": "plugin", 
-        "version": "1.0"
+        "version": "1.5"
     },
 
     "products" : [ ],

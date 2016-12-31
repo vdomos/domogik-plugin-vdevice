@@ -57,82 +57,67 @@ class VDeviceManager(Plugin):
 
         # get the devices list
         self.devices = self.get_device_list(quit_if_no_device=True)
-        # self.log.info(u"==> device:   %s" % format(self.devices))
+        self.log.info(u"==> device:   %s" % format(self.devices))
 
         # get the sensors id per device:
         self.sensors = self.get_sensors(self.devices)
-        # self.log.info(u"==> sensors:   %s" % format(self.sensors))	
-        # INFO ==> sensors:   {66: {u'virtual_number': 159}}  =>  ('device id': {'sensor name': 'sensor id'})
+        self.log.info(u"==> sensors:   %s" % format(self.sensors))	
+        # INFO ==> sensors:   {66: {u'virtual_number': 159}, ...}  =>  ('device id': {'sensor name': 'sensor id'})
 
         # for each device ...
-        self.vdevice_namelist = {}
+        self.vdevice_list = {}
         for a_device in self.devices:
             device_name = a_device["name"]					                # Ex.: "Max Temp Ext." ...
             device_id = a_device["id"]						                # Ex.: "128"
-            device_typeid = a_device["device_type_id"]		                # Ex.: "vdevice.number" | "vdevice.binary" | "vdevice.string" | ...
-            sensor_name = device_typeid.replace("vdevice.","virtual_")      # Ex.: "virtual_number" | "virtual_binary" | "virtual_string" | ...
-            sensor_id = self.sensors[device_id][sensor_name]
-            self.log.info(u"==> Device '%s' (id:%s / %s), Sensor: '%s'" % (device_name, device_id, device_typeid, self.sensors[device_id]))
-            # INFO ==> Device 'VDevice Number 1' (id:113 / vdevice.number), Sensor: '{u'virtual_number': 217}'
-            self.vdevice_namelist[device_id] = device_name
+            sensor_type = self.sensors[device_id].keys()[0]                 # Ex.: "virtual_number" | "virtual_binary" | "virtual_string" | ...
+            self.log.debug(u"==> Device '%s' (id:%s), Sensor: '%s'" % (device_name, device_id, self.sensors[device_id]))
+            # INFO ==> Update Sensor 'virtual_number' / id '445' with value '1' for device 'VNumber 1'
+            self.vdevice_list[device_id] = device_name
 
             # Update device's sensor with device's parammeter if it's not set
-            if not self.sensorMQValueIsSet(sensor_id):
+            last_value = a_device['sensors'][sensor_type]['last_value']
+            self.log.info(u"==> Last value for sensor's device: %s" % last_value)
+            if last_value == None:
                 value = self.get_parameter(a_device, "value")
-                if device_typeid in ["vdevice.binary", "vdevice.switch", "vdevice.openclose", "vdevice.startstop", "vdevice.motion"]:
+                if sensor_type in ["virtual_binary", "virtual_switch", "virtual_openclose", "virtual_startstop", "virtual_motion"]:
                     value = 1 if value == "y" else 0
-                elif device_typeid == "vdevice.number":
+                elif sensor_type in ["virtual_number"]:
                     if not self.is_number(value):
                         value = 0
-                self.log.info(u"==> Device '%s' (id:%s / %s), Update Sensor (id:%s) with initial device parameter value '%s'" % (device_name, device_id, device_typeid, sensor_id, value))
+                self.log.info(u"==> Device '%s' (id:%s), Update Sensor (%s) with initial device parameter value '%s'" % (device_name, device_id, self.sensors[device_id], value))
+                # INFO ==> Device 'VNumber 1' (id:136), Update Sensor ({u'virtual_number': 445}) with initial device parameter value '0.0'
                 self.send_data(device_id, value)
-            
+
         # Subscribte to MQ message "device-new et device.update"
         self.log.info(u"==> Add listener for new or changed devices.")
         self.add_mq_sub("device.update")
         
         self.ready()
 
-
-
-    def sensorMQValueIsSet(self, id):
-        """  REQ/REP message to get sensor value
-        """
-        msg = MQMessage()
-        msg.set_action('sensor_history.get')
-        msg.add_data('sensor_id', id)
-        msg.add_data('mode', 'last')
-        mq_client = MQSyncReq(self.zmq)
-        self.log.info(u"==> 0MQ REQ/REP: REQ Last sensor value for id : '%s'" % id)
-        try:
-            sensor_history = mq_client.request('dbmgr', msg.get(), timeout=10).get()
-            # ['sensor_history.result', '{"status": true, "reason": "", "sensor_id": 242, "values": [{"timestamp": 1456221006, "value_str": "2797", "value_num": 2797.0}], "mode": "last"}']
-            # ['sensor_history.result', '{"status": true, "reason": "", "sensor_id": 300, "values": null, "mode": "last"}']
-            sensor_last = json.loads(sensor_history[1])
-            if sensor_last['status'] == True and sensor_last['values']:
-                sensor_value = sensor_last['values'][0]['value_str']
-                self.log.info(u"==> 0MQ REQ/REP: REP Last sensor value for id '%s': %s" % (id, sensor_value))
-                return True
-            else:
-                self.log.info(u"==> 0MQ REQ/REP: REP Last sensor status for id '%s': null" % id)
-                return False
-        except AttributeError:
-            self.log.error(u"### 0MQ REQ/REP: '%s'", format(traceback.format_exc()))
-            return False
         
 
     def send_data(self, device_id, value):
         """ Send the value sensors values over MQ
         """
         data = {}
-        if device_id not in self.vdevice_namelist:
+        if device_id not in self.vdevice_list:
             self.log.error("### Device ID '%s' unknown, have you restarted the plugin after device creation ?" % (device_id))
             return False, "Plugin vdevice: Unknown device ID %d" % device_id
-            
-        for sensor in self.sensors[device_id]:
-            self.log.info("==> Update Sensor '%s' / id '%s' with value '%s' for device '%s'" % (sensor, self.sensors[device_id][sensor], value, self.vdevice_namelist[device_id]))
-            # INFO ==> Update Sensor 'get_info_number' / id '217' with value '132' for device 'VDevice Number 1'
-            data[self.sensors[device_id][sensor]] = value
+         
+        sensor_type = self.sensors[device_id].keys()[0]
+        if sensor_type in ["virtual_number"]:
+            if not self.is_number(value):
+                errorstr = u"### Updating Sensor '%s' / id '%s' with value '%s' for device '%s': Not a number !" % (sensor_type, self.sensors[device_id][sensor_type], value, self.vdevice_list[device_id])
+                self.log.error(errorstr)
+                return False, errorstr
+        elif sensor_type in ["virtual_binary", "virtual_switch", "virtual_openclose", "virtual_startstop", "virtual_motion"]:
+            if value not in ['0', '1']:
+                errorstr = u"### Updating Sensor '%s' / id '%s' with value '%s' for device '%s': Not a boolean !" % (sensor_type, self.sensors[device_id][sensor_type], value, self.vdevice_list[device_id])
+                self.log.error(errorstr)
+                return False, errorstr
+        self.log.info("==> Update Sensor '%s' / id '%s' with value '%s' for device '%s'" % (sensor_type, self.sensors[device_id][sensor_type], value, self.vdevice_list[device_id]))
+        # INFO ==> Update Sensor 'virtual_number' / id '445' with value '1' for device 'VNumber 1'
+        data[self.sensors[device_id][sensor_type]] = value
 
         try:
             self._pub.send_event('client.sensor', data)
@@ -153,9 +138,7 @@ class VDeviceManager(Plugin):
         if msg.get_action() == "client.cmd":
             data = msg.get_data()
             self.log.info(u"==> Received 0MQ messages data: %s" % format(data))
-            # ==> Received 0MQ messages data: {u'command_id': 35, u'value': u'1', u'device_id': 112}
-            # ==> Received 0MQ messages data: {u'command_id': 36, u'value': u'128', u'device_id': 113}
-            # ==> Received 0MQ messages data: {u'command_id': 37, u'value': u'Bonjour', u'device_id': 114}
+            # INFO ==> Received 0MQ messages data: {u'command_id': 1, u'value': u'-17.9', u'device_id': 6}
 
             status, reason = self.send_data(data["device_id"], data["value"])
 
