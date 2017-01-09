@@ -57,11 +57,11 @@ class VDeviceManager(Plugin):
 
         # get the devices list
         self.devices = self.get_device_list(quit_if_no_device=True)
-        self.log.info(u"==> device:   %s" % format(self.devices))
+        #self.log.info(u"==> device:   %s" % format(self.devices))
 
         # get the sensors id per device:
         self.sensors = self.get_sensors(self.devices)
-        self.log.info(u"==> sensors:   %s" % format(self.sensors))	
+        #self.log.info(u"==> sensors:   %s" % format(self.sensors))	
         # INFO ==> sensors:   {66: {u'virtual_number': 159}, ...}  =>  ('device id': {'sensor name': 'sensor id'})
 
         # for each device ...
@@ -76,14 +76,11 @@ class VDeviceManager(Plugin):
 
             # Update device's sensor with device's parammeter if it's not set
             last_value = a_device['sensors'][sensor_type]['last_value']
-            self.log.info(u"==> Last value for sensor's device: %s" % last_value)
+            self.log.info(u"==> Last value for sensor's device '%s': %s" % (device_name, last_value))
             if last_value == None:
                 value = self.get_parameter(a_device, "value")
                 if sensor_type in ["virtual_binary", "virtual_switch", "virtual_openclose", "virtual_startstop", "virtual_motion"]:
-                    value = 1 if value == "y" else 0
-                elif sensor_type in ["virtual_number"]:
-                    if not self.is_number(value):
-                        value = 0
+                    value = '1' if value == "y" else '0'
                 self.log.info(u"==> Device '%s' (id:%s), Update Sensor (%s) with initial device parameter value '%s'" % (device_name, device_id, self.sensors[device_id], value))
                 # INFO ==> Device 'VNumber 1' (id:136), Update Sensor ({u'virtual_number': 445}) with initial device parameter value '0.0'
                 self.send_data(device_id, value)
