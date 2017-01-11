@@ -81,6 +81,9 @@ class VDeviceManager(Plugin):
                 value = self.get_parameter(a_device, "value")
                 if sensor_type in ["virtual_binary", "virtual_switch", "virtual_openclose", "virtual_startstop", "virtual_motion"]:
                     value = '1' if value == "y" else '0'
+                elif sensor_type in ["virtual_number"]:
+                    if not self.is_number(value):
+                        value = 0
                 self.log.info(u"==> Device '%s' (id:%s), Update Sensor (%s) with initial device parameter value '%s'" % (device_name, device_id, self.sensors[device_id], value))
                 # INFO ==> Device 'VNumber 1' (id:136), Update Sensor ({u'virtual_number': 445}) with initial device parameter value '0.0'
                 self.send_data(device_id, value)
@@ -166,7 +169,8 @@ class VDeviceManager(Plugin):
             return True
         except ValueError:
             return False
-
+        except TypeError:
+            return False
 
 if __name__ == "__main__":
     VDeviceManager()
