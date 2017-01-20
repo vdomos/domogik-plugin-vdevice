@@ -159,8 +159,8 @@ class VDeviceManager(Plugin):
 
 
     # -------------------------------------------------------------------------------------------------
-    def on_message(self, msgid, content):
-        Plugin.on_message(self, msgid, content)        # Transmit mq message to manager    
+    #def on_message(self, msgid, content):
+    #    Plugin.on_message(self, msgid, content)        # Transmit mq message to manager    
         
         
     # -------------------------------------------------------------------------------------------------
