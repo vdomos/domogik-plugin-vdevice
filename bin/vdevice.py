@@ -1,4 +1,4 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 """ This file is part of B{Domogik} project (U{http://www.domogik.org}).
@@ -46,32 +46,44 @@ class VDeviceManager(Plugin):
     """
     """
 
+    # -------------------------------------------------------------------------------------------------
     def __init__(self):
         """ Init plugin
         """
         Plugin.__init__(self, name='vdevice')
 
-        # check if the plugin is configured. If not, this will stop the plugin and log an error
+        # Check if the plugin is configured. If not, this will stop the plugin and log an error
         # if not self.check_configured():
         #	return
 
-        # get the devices list
+        # Get the devices list
         self.devices = self.get_device_list(quit_if_no_device=True)
         #self.log.info(u"==> device:   %s" % format(self.devices))
 
-        # get the sensors id per device:
-        self.sensors = self.get_sensors(self.devices)
-        #self.log.info(u"==> sensors:   %s" % format(self.sensors))	
-        # INFO ==> sensors:   {66: {u'virtual_number': 159}, ...}  =>  ('device id': {'sensor name': 'sensor id'})
-
-        # for each device ...
+        self.sensors = {}
         self.vdevice_list = {}
-        for a_device in self.devices:
+        
+        # Set vdevices list
+        self.initDeviceList(self.devices)
+
+        self.log.info(u"==> Add callback for new or changed devices.")
+        self.register_cb_update_devices(self.myHandleDeviceUpdate)
+        
+        self.ready()
+
+     
+    # -------------------------------------------------------------------------------------------------
+    def initDeviceList(self, devices):
+        # Get the sensors id per device:
+        self.sensors = self.get_sensors(devices)
+        #self.log.info(u"==> sensors: %s" % format(self.sensors))	    # INFO ==> sensors: {66: {u'virtual_number': 159}, ...}  =>  ('device id': {'sensor name': 'sensor id'})
+        
+        self.log.info(u"==> Set vdevices list ...")
+        for a_device in devices:                                            # for each device ...
             device_name = a_device["name"]					                # Ex.: "Max Temp Ext." ...
             device_id = a_device["id"]						                # Ex.: "128"
             sensor_type = self.sensors[device_id].keys()[0]                 # Ex.: "virtual_number" | "virtual_binary" | "virtual_string" | ...
-            self.log.debug(u"==> Device '%s' (id:%s), Sensor: '%s'" % (device_name, device_id, self.sensors[device_id]))
-            # INFO ==> Update Sensor 'virtual_number' / id '445' with value '1' for device 'VNumber 1'
+            self.log.debug(u"==> Device '%s' (id:%s), Sensor: '%s'" % (device_name, device_id, self.sensors[device_id]))    # DEBUG ==> Device 'Max Temp Ext' (id:6), Sensor: '{u'virtual_number': 86}'
             self.vdevice_list[device_id] = device_name
 
             # Update device's sensor with device's parammeter if it's not set
@@ -87,15 +99,10 @@ class VDeviceManager(Plugin):
                 self.log.info(u"==> Device '%s' (id:%s), Update Sensor (%s) with initial device parameter value '%s'" % (device_name, device_id, self.sensors[device_id], value))
                 # INFO ==> Device 'VNumber 1' (id:136), Update Sensor ({u'virtual_number': 445}) with initial device parameter value '0.0'
                 self.send_data(device_id, value)
-
-        # Subscribte to MQ message "device-new et device.update"
-        self.log.info(u"==> Add listener for new or changed devices.")
-        self.add_mq_sub("device.update")
         
-        self.ready()
+       
 
-        
-
+    # -------------------------------------------------------------------------------------------------
     def send_data(self, device_id, value):
         """ Send the value sensors values over MQ
         """
@@ -124,12 +131,13 @@ class VDeviceManager(Plugin):
             self.log.info("==> 0MQ PUB sended = %s" % format(data))			# {u'id_sensor': u'value'} => {217: u'132'}
         except:
             # We ignore the message if some values are not correct ...
-            self.log.debug(u"Bad MQ message to send. This may happen due to some invalid sensor data. MQ data is : {0}".format(data))
+            self.log.debug(u"Bad MQ message to update sensor : {0}".format(data))
             return (False, "Vdevice, Bad MQ message to update sensor")
 
         return (True, None)
 
 
+    # -------------------------------------------------------------------------------------------------
     def on_mdp_request(self, msg):
         """ Called when a MQ req/rep message is received
         """
@@ -150,17 +158,21 @@ class VDeviceManager(Plugin):
             self.reply(reply_msg.get())
 
 
+    # -------------------------------------------------------------------------------------------------
     def on_message(self, msgid, content):
-        self.log.info(u"==> New MQ PUB message '{0}'".format(msgid))   # 'device.update'
-        self.log.info(u"Message content : {0}".format(content))
-        # {u'client_id': u'plugin-vdevice.hades', u'device_id': 59}
-        # {u'client_id': u'plugin-script.hades', u'device_id': 64}
-        if "plugin-vdevice" not in content['client_id']:
-            self.log.debug("PUB message 'device.update' not for vdevice plugin.")
-            return
+        Plugin.on_message(self, msgid, content)        # Transmit mq message to manager    
         
+        
+    # -------------------------------------------------------------------------------------------------
+    def myHandleDeviceUpdate(self, devices):            # A methode to handle updated devices by callback
+        self.log.info(u"==> DeviceUpdate called")
+        #for device in devices:
+        #    self.log.info(u" %s: '%s'" % (device['id'], device['name']))
+        self.vdevice_list = {}
+        self.initDeviceList(self.devices)
 
 
+    # -------------------------------------------------------------------------------------------------
     def is_number(self, s):
         ''' Return 'True' if s is a number
         '''
@@ -171,6 +183,7 @@ class VDeviceManager(Plugin):
             return False
         except TypeError:
             return False
+
 
 if __name__ == "__main__":
     VDeviceManager()
