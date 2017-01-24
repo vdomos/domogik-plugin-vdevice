@@ -1,4 +1,4 @@
-.. _index:
+﻿.. _index:
 
 ===================
 Plugin vdevice
@@ -7,25 +7,27 @@ Plugin vdevice
 Domogik Plugin for Virtual Device
 
 
-.. image:: Domogik_Plugin_Vdevice_1.png
-	
-
-
 Purpose
 =======
 
 
-This plugin provides a **command** to update the **sensor** of the created device.
+This plugin provides Virtual Devices to store datatype value in sensor. You just need to use the device **command** to update the device **sensor**.
 
-Three devices type as the Script plugin are possible:
+There are some datatype of device available in plugin, but it will always be possible to add if necessary:
 
-    * vdevice.info_binary
-    * vdevice.info_number
-    * vdevice.info_string
+    * "vdevice.number"
+    * "vdevice.binary"
+    * "vdevice.switch"
+    * "vdevice.openclose"
+    * "vdevice.startstop"
+    * "vdevice.motion"
+    * "vdevice.string"
+    * "vdevice.colorrgb"
+    * "vdevice.colorrgbhexa"
 
 Each device have a **command** and a **sensor**.
 
-The called **command** will update the **sensor**, allowing the sensor to be update from a REST URL.
+The called **command** will update the **sensor**, allowing the sensor to be update from a REST URL or a scenario.
 
 A virtual device give a REST URL for external software to update the virtual sensor of this device:
 
@@ -36,7 +38,7 @@ For example,
     * A small device like wifi ESP8266 sensor can call a Domogik **VDevice** URL to update the **VDevice** sensor
     
 
-Simple test example in shell, for a device with a **command** (id=36) and a **sensor** (id=217):
+Simple example test in shell, for a virtual device with a **command** (id=36) and a **sensor** (id=217):
 
 For update the sensor: ::
 
@@ -48,12 +50,8 @@ The read of the sensor return the same value: ::
 	[{"timestamp": 1452101182.0, "value_str": "260", "value_num": 260.0}]
 
 
-
 This will allow an easier transition from home automation box to Domogik
     
-
-.. warning::	
-	The plugin and the documentation are still in development
 
 
 Dependencies
@@ -68,37 +66,24 @@ Plugin configuration
 No configuration needed for the plugin
    
 
-Like Script plugin, there are only 3 datatype of sensors for now:
-
-    * vdevice.info_binary
-    * vdevice.info_number
-    * vdevice.info_string
-
-    
-.. image:: Domogik_Plugin_Vdevice_2.png
-
-
 Create the devices
 ==================
 
 Device parameters configuration
 -------------------------------
 
-There is no parameter for device configuration, only a name.
+There is one parameter for device configuration:
+
+This paremeter is use to initialize sensor's value, only if this value is empty when plugin start:
+
+===================== =========================== ======================================================================
+Key                   Type                        Description
+===================== =========================== ======================================================================
+value                 Depends on the datatype     Initial value for the device's sensor
+===================== =========================== ======================================================================
 
 
 .. image:: Domogik_Plugin_Vdevice_3.png
-
-
-Exemple of a device "Livebox débit", with the **command** used to update the **sensor**:
-
-.. image:: Domogik_Plugin_Vdevice_4.png
-
-
-Exemple with Jeedom to push sensor's value in Domogik:
-
-.. image:: Domogik_Plugin_Vdevice_5.png
-
 
 
 
@@ -114,7 +99,4 @@ Set up your widgets on the user interface
 You can now place the widgets of your devices features on the user interface.
 
 
-In Domoweb:
-
-.. image:: Domogik_Plugin_Vdevice_6.png
 
