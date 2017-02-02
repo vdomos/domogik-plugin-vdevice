@@ -118,7 +118,7 @@ class VDeviceManager(Plugin):
                 self.log.error(errorstr)
                 return False, errorstr
         elif sensor_type in ["virtual_binary", "virtual_switch", "virtual_openclose", "virtual_startstop", "virtual_motion"]:
-            if value not in ['0', '1']:
+            if value not in ['0', '1', 0, 1]:
                 errorstr = u"### Updating Sensor '%s' / id '%s' with value '%s' for device '%s': Not a boolean !" % (sensor_type, self.sensors[device_id][sensor_type], value, self.vdevice_list[device_id])
                 self.log.error(errorstr)
                 return False, errorstr
