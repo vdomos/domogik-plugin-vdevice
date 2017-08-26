@@ -76,14 +76,14 @@ class VDeviceManager(Plugin):
     def initDeviceList(self, devices):
         # Get the sensors id per device:
         self.sensors = self.get_sensors(devices)
-        #self.log.info(u"==> sensors: %s" % format(self.sensors))	    # INFO ==> sensors: {66: {u'virtual_number': 159}, ...}  =>  ('device id': {'sensor name': 'sensor id'})
+        #self.log.info(u"==> sensors: %s" % format(self.sensors))	    # INFO ==> sensors: {66: {u'value': 159}, ...}  =>  ('device id': {'sensor name': 'sensor id'})
         
         self.log.info(u"==> Set vdevices list ...")
         for a_device in devices:                                            # for each device ...
             device_name = a_device["name"]					                # Ex.: "Max Temp Ext." ...
             device_id = a_device["id"]						                # Ex.: "128"
-            sensor_type = self.sensors[device_id].keys()[0]                 # Ex.: "virtual_number" | "virtual_binary" | "virtual_string" | ...
-            self.log.debug(u"==> Device '%s' (id:%s), Sensor: '%s'" % (device_name, device_id, self.sensors[device_id]))    # DEBUG ==> Device 'Max Temp Ext' (id:6), Sensor: '{u'virtual_number': 86}'
+            sensor_type = self.sensors[device_id].keys()[0]                 # Ex.: "value" | "binary" | "string" | ...
+            self.log.debug(u"==> Device '%s' (id:%s), Sensor: '%s'" % (device_name, device_id, self.sensors[device_id]))    # DEBUG ==> Device 'Max Temp Ext' (id:6), Sensor: '{u'number': 86}'
             self.vdevice_list[device_id] = device_name
 
             # Update device's sensor with device's parammeter if it's not set
@@ -91,13 +91,13 @@ class VDeviceManager(Plugin):
             self.log.info(u"==> Last value for sensor's device '%s': %s" % (device_name, last_value))
             if last_value == None:
                 value = self.get_parameter(a_device, "value")
-                if sensor_type in ["virtual_binary", "virtual_switch", "virtual_openclose", "virtual_startstop", "virtual_motion"]:
+                if sensor_type in ["state", "switch", "opening", "start", "motion"]:
                     value = '1' if value == "y" else '0'
-                elif sensor_type in ["virtual_number"]:
+                elif sensor_type in ["value", "level", "temperature"]:
                     if not self.is_number(value):
                         value = 0
                 self.log.info(u"==> Device '%s' (id:%s), Update Sensor (%s) with initial device parameter value '%s'" % (device_name, device_id, self.sensors[device_id], value))
-                # INFO ==> Device 'VNumber 1' (id:136), Update Sensor ({u'virtual_number': 445}) with initial device parameter value '0.0'
+                # INFO ==> Device 'VNumber 1' (id:136), Update Sensor ({u'value': 445}) with initial device parameter value '0.0'
                 self.send_data(device_id, value)
         
        
@@ -112,18 +112,18 @@ class VDeviceManager(Plugin):
             return False, "Plugin vdevice: Unknown device ID %d" % device_id
          
         sensor_type = self.sensors[device_id].keys()[0]
-        if sensor_type in ["virtual_number"]:
+        if sensor_type in ["value", "level", "temperature"]:
             if not self.is_number(value):
                 errorstr = u"### Updating Sensor '%s' / id '%s' with value '%s' for device '%s': Not a number !" % (sensor_type, self.sensors[device_id][sensor_type], value, self.vdevice_list[device_id])
                 self.log.error(errorstr)
                 return False, errorstr
-        elif sensor_type in ["virtual_binary", "virtual_switch", "virtual_openclose", "virtual_startstop", "virtual_motion"]:
+        elif sensor_type in ["state", "switch", "opening", "start", "motion"]:
             if value not in ['0', '1', 0, 1]:
                 errorstr = u"### Updating Sensor '%s' / id '%s' with value '%s' for device '%s': Not a boolean !" % (sensor_type, self.sensors[device_id][sensor_type], value, self.vdevice_list[device_id])
                 self.log.error(errorstr)
                 return False, errorstr
         self.log.info("==> Update Sensor '%s' / id '%s' with value '%s' for device '%s'" % (sensor_type, self.sensors[device_id][sensor_type], value, self.vdevice_list[device_id]))
-        # INFO ==> Update Sensor 'virtual_number' / id '445' with value '1' for device 'VNumber 1'
+        # INFO ==> Update Sensor 'value' / id '445' with value '1' for device 'VNumber 1'
         data[self.sensors[device_id][sensor_type]] = value
 
         try:

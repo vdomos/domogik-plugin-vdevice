@@ -15,16 +15,19 @@ This plugin provides Virtual Devices to store datatype value in sensor. You just
 
 There are some datatype of device available in plugin, but it will always be possible to add if necessary:
 
-    * "vdevice.number"
-    * "vdevice.binary"
+    * "vdevice.value"
+    * "vdevice.level"
+    * "vdevice.temperature"
+    * "vdevice.state"
     * "vdevice.switch"
-    * "vdevice.openclose"
-    * "vdevice.startstop"
+    * "vdevice.opening"
+    * "vdevice.start"
     * "vdevice.motion"
     * "vdevice.string"
     * "vdevice.colorrgb"
     * "vdevice.colorrgbhexa"
     * "vdevice.colorcii"
+    * "vdevice.video"
     * "vdevice.datetime"
 
 Each device have a **command** and a **sensor**.
