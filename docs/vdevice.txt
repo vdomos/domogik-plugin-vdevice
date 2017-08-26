@@ -24,6 +24,11 @@ There are some datatype of device available in plugin, but it will always be pos
     * "vdevice.string"
     * "vdevice.colorrgb"
     * "vdevice.colorrgbhexa"
+<<<<<<< HEAD
+=======
+    * "vdevice.colorcii"
+    * "vdevice.datetime"
+>>>>>>> 2.0
 
 Each device have a **command** and a **sensor**.
 
@@ -66,6 +71,14 @@ Plugin configuration
 No configuration needed for the plugin
    
 
+<<<<<<< HEAD
+=======
+Device's type available:
+    
+.. image:: Domogik_Plugin_Vdevice_2.png
+
+
+>>>>>>> 2.0
 Create the devices
 ==================
 
@@ -91,6 +104,8 @@ Start the plugin
 ================
 
 You can now start the plugin (start button) and use the created devices.
+
+Now, there is no need to restart the plugin if a device is added or updated.
 
 
 Set up your widgets on the user interface

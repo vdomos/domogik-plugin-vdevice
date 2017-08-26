@@ -10,7 +10,7 @@
         "domogik_min_version": "0.5.0", 
         "name": "vdevice", 
         "type": "plugin", 
-        "version": "1.0"
+        "version": "2.0"
     },
 
     "products" : [ ],
@@ -177,6 +177,38 @@
                     "default": "000000"
                 }
             ]
+        },
+        "vdevice.colorcii": {
+            "id": "vdevice.colorcii",
+            "description": "Virtual device for ColorCII", 
+            "name": "Virtual ColorCII",
+            "commands": ["set_virtual_colorcii"],
+            "sensors": ["virtual_colorcii"],
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value (string) for the device's sensor",
+                    "type": "string",
+                    "default": "W"
+                }
+            ]
+        },
+        "vdevice.datetime": {
+            "id": "vdevice.datetime",
+            "description": "Virtual device for DateTime", 
+            "name": "Virtual DateTime",
+            "commands": ["set_virtual_datetime"],
+            "sensors": ["virtual_datetime"],
+            "parameters": [
+                {
+                    "key": "value",
+                    "xpl": false,
+                    "description": "Initial value (string) for the device's sensor",
+                    "type": "string",
+                    "default": "1970-01-01"
+                }
+            ]
         }
     },
 
@@ -287,6 +319,28 @@
                 {
                     "key" : "value",
                     "data_type": "DT_ColorRGBHexa",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_colorcii" : {
+            "name" : "Virtual ColorCII",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_ColorCII",
+                    "conversion" : ""
+                }
+            ]
+        },
+        "set_virtual_datetime" : {
+            "name" : "Virtual DateTime",
+            "return_confirmation" : true,
+            "parameters" : [
+                {
+                    "key" : "value",
+                    "data_type": "DT_DateTime",
                     "conversion" : ""
                 }
             ]
@@ -424,6 +478,34 @@
             "name": "Virtual ColorRGBHexa",
             "incremental" : false,
             "data_type": "DT_ColorRGBHexa",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_colorcii": {
+            "name": "Virtual ColorCII",
+            "incremental" : false,
+            "data_type": "DT_ColorCII",
+            "conversion" : "",
+            "timeout" : 0,
+            "history": {
+                "store": true,
+                "duplicate" : false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "virtual_datetime": {
+            "name": "Virtual DateTime",
+            "incremental" : false,
+            "data_type": "DT_DateTime",
             "conversion" : "",
             "timeout" : 0,
             "history": {
